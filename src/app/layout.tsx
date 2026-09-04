@@ -1,6 +1,7 @@
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { SidebarContent } from '@/components/sidebar/sidebar-content';
 
 export const metadata: Metadata = {
   title: 'Prompt Manager',
@@ -13,13 +14,17 @@ const inter = Inter({
   weight: ['400', '500', '700'],
 });
 
-export default function RootLayout({ children }: LayoutProps<'/'>) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} antialiased bg-gray-900 text-white`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="pt-BR" className={`${inter.variable} antialiased`}>
+      <body className="flex h-screen bg-background text-foreground">
+        <SidebarContent />
+        <main className="flex-1 overflow-auto p-6">{children}</main>
+      </body>
     </html>
   );
 }

@@ -1,4 +1,7 @@
-import { SidebarContent } from '@/components/sidebar/sidebar-content';
+import {
+  SidebarContent,
+  SidebarContentProps,
+} from '@/components/sidebar/sidebar-content';
 import { render, screen } from '@/lib/test-utils';
 import userEvent from '@testing-library/user-event';
 
@@ -7,19 +10,51 @@ jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock }),
 }));
 
-const makeSut = () => {
-  return render(<SidebarContent />);
+const initialPrompts = [
+  {
+    id: '1',
+    title: 'title 01',
+    content: 'content 01',
+  },
+];
+
+const makeSut = (
+  { prompts = initialPrompts }: SidebarContentProps = {} as SidebarContentProps
+) => {
+  return render(<SidebarContent prompts={prompts} />);
 };
 
 describe('SidebarContent', () => {
   const user = userEvent.setup();
 
-  it('deveria renderizar o botão para criar um novo prompt', () => {
-    makeSut();
+  describe('Base', () => {
+    it('deveria renderizar o botão para criar um novo prompt', () => {
+      makeSut();
 
-    expect(screen.getByRole('complementary')).toBeVisible();
-    expect(screen.getByRole('button', { name: 'Novo prompt' })).toBeVisible();
+      expect(screen.getByRole('complementary')).toBeVisible();
+      expect(screen.getByRole('button', { name: 'Novo prompt' })).toBeVisible();
+    });
+
+    it('deveria renderizar a lista de prompts', () => {
+      const input = [
+        {
+          id: '1',
+          title: 'title 01',
+          content: 'content 01',
+        },
+        {
+          id: '2',
+          title: 'title 02',
+          content: 'content 02',
+        },
+      ];
+      makeSut({ prompts: input });
+
+      expect(screen.getByText(input[0].title)).toBeInTheDocument();
+      expect(screen.getAllByRole('paragraph')).toHaveLength(input.length);
+    });
   });
+
   describe('Colapsar / Expandir', () => {
     it('deveria iniciar expandida e exibir o botão minimizar', () => {
       makeSut();

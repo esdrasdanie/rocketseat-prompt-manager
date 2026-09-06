@@ -6,7 +6,7 @@ import {
   ArrowRightToLine,
   X as CloseButton,
 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { startTransition, useState } from 'react';
 import { Logo } from '../logo';
 import { Button } from '../ui/button';
@@ -24,11 +24,12 @@ export type SidebarContentProps = {
 
 export const SidebarContent = ({ prompts }: SidebarContentProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const collapsedSidebar = () => setIsCollapsed(true);
   const expandSidebar = () => setIsCollapsed(false);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(searchParams.get('q') ?? '');
 
   const handleNewPrompt = () => router.push('/new');
 

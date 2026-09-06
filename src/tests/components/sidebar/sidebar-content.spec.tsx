@@ -13,8 +13,8 @@ jest.mock('next/navigation', () => ({
 const initialPrompts = [
   {
     id: '1',
-    title: 'title 01',
-    content: 'content 01',
+    title: 'Title 01',
+    content: 'Content 01',
   },
 ];
 
@@ -39,19 +39,29 @@ describe('SidebarContent', () => {
       const input = [
         {
           id: '1',
-          title: 'title 01',
-          content: 'content 01',
+          title: 'Example 01',
+          content: 'Content 01',
         },
         {
           id: '2',
-          title: 'title 02',
-          content: 'content 02',
+          title: 'Example 02',
+          content: 'Content 02',
         },
       ];
       makeSut({ prompts: input });
 
       expect(screen.getByText(input[0].title)).toBeInTheDocument();
       expect(screen.getAllByRole('paragraph')).toHaveLength(input.length);
+    });
+
+    it('deveria atualizar o campo de busca ao digitar', async () => {
+      const text = 'AI';
+      makeSut();
+      const searchInput = screen.getByPlaceholderText('Buscar prompts...');
+
+      await user.type(searchInput, text);
+
+      expect(searchInput).toHaveValue(text);
     });
   });
 
@@ -92,7 +102,7 @@ describe('SidebarContent', () => {
   });
 
   describe('Novo Prompt', () => {
-    it('deveria navegar o usuario para a pagina de novo prompt / new', async () => {
+    it('deveria navegar o usuario para a paga de novo prompt /new', async () => {
       makeSut();
 
       const newButton = screen.getByRole('button', { name: 'Novo prompt' });

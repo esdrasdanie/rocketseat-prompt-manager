@@ -1,6 +1,7 @@
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { Toaster } from 'sonner';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { Sidebar } from '@/components/sidebar';
 
@@ -26,6 +27,8 @@ export default function RootLayout({
         <NuqsAdapter>
           <Sidebar />
           <main className="flex-1 overflow-auto p-6">{children}</main>
+
+          <Toaster position="top-right" />
         </NuqsAdapter>
       </body>
     </html>

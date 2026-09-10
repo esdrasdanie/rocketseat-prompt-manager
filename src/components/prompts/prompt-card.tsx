@@ -1,9 +1,10 @@
 import { PromptSummary } from '@/core/domain/prompts/prompt.entity';
 import Link from 'next/link';
 
-type PromptCardProps = {
+export type PromptCardProps = {
   prompt: PromptSummary;
 };
+
 export const PromptCard = ({ prompt }: PromptCardProps) => {
   return (
     <li className="p-3 rounded-lg transition-all duration-200 group relative hover:bg-gray-700">

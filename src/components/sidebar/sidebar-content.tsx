@@ -164,7 +164,6 @@ export const SidebarContent = ({ prompts }: SidebarContentProps) => {
             className="flex-1 overflow-auto px-6 pb-6"
             aria-label="Lista de prompts"
           >
-            <PromptList prompts={prompts} />
             <PromptList prompts={promptList} />
           </nav>
         </>
